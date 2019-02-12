@@ -7,3 +7,10 @@ class profile(models.Model):
     email = models.CharField(max_length=50)
     passwd = models.CharField(max_length=20)
     profile_pic = models.CharField(max_length=1000)
+
+    def __str__(self):
+        return self.uname + '-' + self.email
+
+class posts(models.Model):
+    posts_uname = models.ForeignKey(profile, on_delete=models.CASCADE)
+    categories = models.CharField(max_length=100)
