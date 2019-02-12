@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
         re_path(r'^$', views.index, name='index'),
-        re_path(r'^(?P<user_id>[0-9]+)/$', views.profile, name='profile' ),
+        re_path(r'^(?P<user_id>[0-9]+)/$', views.detail, name='detail' ),
 ]
