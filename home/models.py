@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class profile(models.Model):
+class Users(models.Model):
     uname = models.CharField(max_length=20)
     email = models.CharField(max_length=50)
     passwd = models.CharField(max_length=20)
@@ -13,5 +13,5 @@ class profile(models.Model):
         return self.uname + '-' + str(self.created)
 
 class posts(models.Model):
-    posts_uname = models.ForeignKey(profile, on_delete=models.CASCADE)
+    posts_uname = models.ForeignKey(Users, on_delete=models.CASCADE)
     categories = models.CharField(max_length=100)
