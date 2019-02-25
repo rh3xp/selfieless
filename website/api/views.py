@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, CategorySerializer
+from .serializers import UserSerializer, CategorySerializer, PostSerializer
 from home.models import User, Category, Post
 from rest_framework.views import exception_handler
 from rest_framework import status
@@ -34,12 +34,12 @@ class CreateView(generics.ListCreateAPIView):
 
         elif request.method == 'POST':
             serializer = UserSerializer(data=request.data)
-            
+
             if User.objects.filter(username=self.cleaned_data['uname']).exists():
                 return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
-    
+
             else:
-                
+
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -86,7 +86,7 @@ class CategoryView(generics.ListCreateAPIView):
 
         elif request.method == 'POST':
             serializer = CategorySerializer(data=request.data)
-            
+
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -102,3 +102,49 @@ class CategoryView(generics.ListCreateAPIView):
 class DeleteCategoryView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class PostView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    '''
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
+    '''
+
+    @api_view(['GET', 'POST'])
+
+
+
+    def user_list(request):
+        """
+        List all code snippets, or create a new snippet.
+        """
+
+        if request.method == 'GET':
+            all_users = Post.objects.all()
+            serializer = PostSerializer(all_users, many=True)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+        elif request.method == 'POST':
+            serializer = PostSerializer(data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        def custom_exception_handler(exc, context):
+            response = exception_handler(exc, context)
+            if response is not None:
+                response.data['status_code'] = response.status_code
+
+
+
+class DeletePostView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

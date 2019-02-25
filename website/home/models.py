@@ -1,4 +1,7 @@
 from django.db import models
+from django.conf import settings
+
+from django.contrib.auth.models import User
 
 
 class User(models.Model):
@@ -7,14 +10,13 @@ class User(models.Model):
     passwd = models.CharField(max_length=20)
     profile_pic = models.CharField(max_length=1000, blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return self.uname + '-' + str(self.created)
 
 
 class Category(models.Model):
     name = models.CharField(max_length=255, verbose_name="Title")
-    slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
         ordering = ('name'),
@@ -25,8 +27,7 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=50, unique=True)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=255, verbose_name="Title")
     text = models.TextField()
 
