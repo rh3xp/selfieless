@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 
 
 class User(models.Model):
@@ -12,7 +12,7 @@ class User(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.uname + '-' + str(self.created)
+        return self.uname
 
 
 class Category(models.Model):
@@ -27,9 +27,12 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
+    uname = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    #uname = models.ForeignKey(settings.AUTH_USER_MODEL,default=1, on_delete=models.SET_NULL)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=255, verbose_name="Title")
-    text = models.TextField()
+    caption = models.TextField()
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return self.title
