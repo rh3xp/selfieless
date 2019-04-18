@@ -1,14 +1,3 @@
-blinker
-Flask-BasicAuth
-Flask-Bootstrap
-Flask-Script
-Flask-Security
-Flask-SQLAlchemy
-Flask-Testing
-Flask-WTF
 Flask
-gunicorn
-itsdangerous
-Jinja2
-Werkzeug
+flask_cors
 requests

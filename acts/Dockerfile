@@ -4,5 +4,5 @@ WORKDIR /acts
 COPY . /acts
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 80
-ENV TEAM_ID=CC_218_226_239_225
-CMD ["python3", "acts.py"]
+ENV TEAM_ID=CC_248_256_293_472
+CMD ["python3", "act.py"]
